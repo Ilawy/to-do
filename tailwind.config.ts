@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+import daisy from "daisyui";
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,6 +15,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [daisy],
 };
 export default config;

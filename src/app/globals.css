@@ -31,3 +31,68 @@ body {
     text-wrap: balance;
   }
 }
+
+
+
+svg#loading{
+  animation: rotate 5s linear infinite;
+}
+
+svg#loading circle{
+  animation: scaler 3s linear calc(var(--i) * 100ms) infinite;
+}
+
+circle#c1{
+  --i: 0;
+}
+
+circle#c2{
+  --i: 1;
+}
+
+circle#c3{
+  --i: 2;
+}
+
+circle#c4{
+  --i: 3;
+}
+
+circle#c5{
+  --i: 4;
+}
+
+circle#c6{
+  --i: 5;
+}
+
+circle#c7{
+  --i: 6;
+}
+
+circle#c8{
+  --i: 7;
+}
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes scaler {
+  0%{
+    r: 4;  
+  }
+  50%{
+    r: 5;
+    fill: #eee;
+  }
+  100%{
+    r: 4;
+  }
+}
