@@ -8,7 +8,8 @@ import { log } from "console";
 // If auth is not valid for matching routes
 // Redirect to a redirect path
 export function middleware(request: NextRequest) {
-  const redirect_path = "http://localhost:3000/login";
+  const redirect_path = new URL(request.nextUrl);
+  redirect_path.pathname = "/login";
 
   const cookieStore = cookies();
 
