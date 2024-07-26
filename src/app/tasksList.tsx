@@ -43,7 +43,7 @@ export default function TasksList({
         //? instead of updating, just fetch new data
 
         const newItems = await pb
-          .collection("tasks")
+          .collection(TASKS_COLLECTION)
           .getFullList<TodoTasksResponse>({
             sort: "-created",
             $autoCancel: false,
