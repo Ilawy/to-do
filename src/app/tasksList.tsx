@@ -1,6 +1,7 @@
 "use client";
+import { TASKS_COLLECTION } from "@/const";
 import { createPBClient } from "@/lib/pb/client";
-import { TasksResponse } from "@/types/pocketbase-types";
+import { TodoTasksResponse } from "@/types/pocketbase-types";
 import { Trash2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -11,42 +12,46 @@ export default function TasksList({
 }: {
   currentPage: number;
   pages: number;
-  items: TasksResponse[];
+  items: TodoTasksResponse[];
 }) {
   const [usableItems, setUsableItems] = useState(items);
   const pb = createPBClient();
   const deleteTask = async (id: string) => {
     if (confirm("Are you sure you want to delete this task?")) {
-      await pb.collection("tasks").delete(id);
+      await pb.collection(TASKS_COLLECTION).delete(id);
     }
   };
   useEffect(() => {
-    const unsub = pb.collection("tasks").subscribe("*", async (update) => {
-      // // create, update, delete
-      // if (update.action === "create") {
-      //   setUsableItems([update.record, ...usableItems]);
-      // }
-      // if (update.action === "update") {
-      //   setUsableItems(
-      //     usableItems.map((x) =>
-      //       x.id === update.record.id ? update.record : x
-      //     )
-      //   );
-      // }
-      // if (update.action === "delete") {
-      //   setUsableItems(usableItems.filter((x) => x.id !== update.record.id));
-      // }
+    const unsub = pb
+      .collection(TASKS_COLLECTION)
+      .subscribe("*", async (update) => {
+        // // create, update, delete
+        // if (update.action === "create") {
+        //   setUsableItems([update.record, ...usableItems]);
+        // }
+        // if (update.action === "update") {
+        //   setUsableItems(
+        //     usableItems.map((x) =>
+        //       x.id === update.record.id ? update.record : x
+        //     )
+        //   );
+        // }
+        // if (update.action === "delete") {
+        //   setUsableItems(usableItems.filter((x) => x.id !== update.record.id));
+        // }
 
-      //? instead of updating, just fetch new data
+        //? instead of updating, just fetch new data
 
-      const newItems = await pb.collection("tasks").getFullList<TasksResponse>({
-        sort: "-created",
-        $autoCancel: false,
-        page: currentPage,
-        perPage: 10,
+        const newItems = await pb
+          .collection("tasks")
+          .getFullList<TodoTasksResponse>({
+            sort: "-created",
+            $autoCancel: false,
+            page: currentPage,
+            perPage: 10,
+          });
+        setUsableItems(newItems);
       });
-      setUsableItems(newItems);
-    });
     return () => {
       console.log("destroy");
     };

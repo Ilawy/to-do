@@ -1,5 +1,6 @@
 "use client";
 
+import { TASKS_COLLECTION } from "@/const";
 import { createPBClient } from "@/lib/pb/client";
 import { PlusIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
@@ -27,7 +28,7 @@ export default function NewModal({}) {
             ev.preventDefault();
             const fd = new FormData(contentForm.current as HTMLFormElement);
             fd.set("owner", pb.authStore.model!.id);
-            pb.collection("tasks").create(fd);
+            pb.collection(TASKS_COLLECTION).create(fd);
           }}
           ref={contentForm}
           className="modal-box flex flex-col gap-3"

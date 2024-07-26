@@ -4,11 +4,12 @@ import NewModal from "./newModal";
 import TasksList from "./tasksList";
 import { createPBServer } from "@/lib/pb/server";
 import { cookies } from "next/headers";
+import { TASKS_COLLECTION } from "@/const";
 
 export default async function Home() {
   const pb = createPBServer(cookies());
   //TODO: handle pages
-  const data = await pb.collection("tasks").getList(1, 30, {
+  const data = await pb.collection(TASKS_COLLECTION).getList(1, 30, {
     sort: "-created",
   });
 

@@ -3,6 +3,7 @@ import { GoalIcon } from "lucide-react";
 import { createPBClient } from "@/lib/pb/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { USERS_COLLECTION } from "@/const";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
@@ -43,7 +44,7 @@ export default function Login() {
                 new FormData(e.currentTarget)
               );
               client
-                .collection("users")
+                .collection(USERS_COLLECTION)
                 .authWithPassword(email as string, password as string)
                 .catch((e) => {
                   alert(e.message);
